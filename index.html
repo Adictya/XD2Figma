@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>XD2Figma</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: monospace;
+        color: white;
+        background-color: #303030;
+        padding: 0px 200px;
+      }
+      h1 {
+        font-size: 60px;
+        line-height: 1.5em;
+      }
+      textarea {
+        background-color: #404040;
+        color: white;
+        width: 85%;
+        height: 20vh;
+        min-width: 600px;
+      }
+      span {
+        font-size: 20px;
+      }
+      #seperator {
+        height: 20px;
+      }
+      #xd {
+        color: #ff61f6;
+        font-size: 0.75em;
+        background-color: #470137;
+        padding: 5px 15px 5px 15px;
+        border-radius: 10px;
+      }
+      button {
+        margin-top: 20px;
+        height: 40px;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        padding: 0 20px 0 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Converts SVGs copied from
+      <span id="xd">XD</span>
+      to work nicely with
+      <span style="color: #0ac97f; font-size: inherit">✨Figma✨</span>
+    </h1>
+    <span
+      >Basically replaces <span style="color: red">&lt;tspan&gt;</span> with a
+      new line. Yeah, its that simple</span
+    >
+    <div id="seperator"></div>
+    <textarea
+      id="code"
+      placeholder="Copy svg code from xd and paste here"
+    ></textarea>
+    <br />
+    <button id="convert">Convert and copy to clipboard</button>
+    <script>
+      document.getElementById("convert").onclick = () => {
+        code = document.getElementById("code");
+        code.value = code.value.replaceAll(
+          /(?<=<\/tspan>)<tspan((\s+\w+-*\w*(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)?>/g,
+          "\n"
+        );
+        code.value = code.value.replaceAll(
+          /(?<!<\/tspan>)<tspan((\s+\w+-*\w*(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)?>/g,
+          ""
+        );
+        code.value = code.value.replaceAll(/<\/tspan>/g, "");
+        code.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
